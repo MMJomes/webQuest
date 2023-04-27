@@ -23,26 +23,23 @@
             <h3 class="text-center mb-4" style="font-size: 24px">Tags List</h3>
 
             <hr>
-            <div class="row">
+            <div class="flex flex-wrap">
                 @foreach ($tags as $tag)
                     <div class="col lg:w-1/3 lg:pr-4">
-                        <div class="max-w-7xl mx-auto py-4 sm:px-3 lg:px-4">
-                            <div class="bg-white rounded-lg shadow-lg mb-3">
-                                <div class="p-4">
-                                    <h3 class="text-xl font-bold mb-2">Tag Name</h4>
-                                        <p class="text-gray-700 text-base">{{ $tag->name }}</p>
-                                </div>
+                        <div class="bg-white shadow-md rounded-md p-4 m-2 max-w-xs">
+                            <h2 class="text-lg font-medium">Tag Name</h2>
+                            <p class="text-gray-500">{{ $tag->name }}</p>
+                            <div class="flex justify-end">
                                 <a href="{{ route('tag.edit', $tag->id) }}"
-                                    class="btn btn-blue rounded ">Edit</a>
+                                    class="text-indigo-600  hover:text-indigo-900 mx-3">Edit</a>
 
-                                <form action="{{ route('tag.destroy', $tag->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="submit" value="Delete" class="text-indigo-600 btn hover:text-indigo-500">
-                                </form>
-
+                                    <form action="{{ route('tag.destroy', $tag->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="submit" value="Delete"
+                                            class="text-indigo-600 btn hover:text-indigo-500">
+                                    </form>
                             </div>
-
                         </div>
                     </div>
                 @endforeach

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TagRequest;
 use App\Models\Tag;
 use App\Repositories\Interf\TagRepository;
-use Illuminate\Http\Request;
 
 
 class TagController extends Controller

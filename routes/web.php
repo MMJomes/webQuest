@@ -16,10 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::resource('tag',TagController::class);
 Route::resource('product', ProductController::class);
+Route::get('/', [ProductController::class, 'index'])->name('product.index');
 Route::resource('category', CategoryController::class);

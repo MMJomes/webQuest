@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Repositories\Interf\CategoryRepository;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private CategoryRepository $repository;
+    public function __construct(CategoryRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function index()
     {
-        //
+        $tags = $this->repository->getall();
+        return view('category.index', compact('tags'));
     }
 
     /**
@@ -24,27 +27,21 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $this->repository->store($request);
+        return redirect()->route('category.index');
     }
-
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
         //
     }
@@ -52,34 +49,38 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $tag_updated = Category::find($id);
+        $tags = $this->repository->getall();
+        return view('category.edit', compact('tag_updated', 'tags'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        $this->repository->update($request, $id);
+        return redirect()->route('category.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        Category::find($id)->delete();
+        return redirect()->back();
     }
 }

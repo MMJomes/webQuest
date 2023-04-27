@@ -15,10 +15,9 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tags_id');
+            $table->string('tags_id');
             $table->unsignedBigInteger('categories_id');
             $table->string('name');
-            $table->foreign('tags_id')->references('id')->on('tags')->onDelete('cascade');
             $table->foreign('categories_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
